@@ -8,6 +8,7 @@ use core::num::NonZeroU64;
 use glyph_brush::ab_glyph::{point, Rect};
 use std::marker::PhantomData;
 use std::mem;
+use wgpu::SamplerBindingType;
 
 pub struct Pipeline<Depth> {
     transform: wgpu::Buffer,
@@ -236,10 +237,9 @@ fn build<D>(
                 wgpu::BindGroupLayoutEntry {
                     binding: 1,
                     visibility: wgpu::ShaderStages::FRAGMENT,
-                    ty: wgpu::BindingType::Sampler {
-                        filtering: true,
-                        comparison: false,
-                    },
+                    ty: wgpu::BindingType::Sampler(
+                        SamplerBindingType::Filtering,
+                    ),
                     count: None,
                 },
                 wgpu::BindGroupLayoutEntry {
